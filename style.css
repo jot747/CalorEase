@@ -1,0 +1,388 @@
+* {
+    margin: 0px;
+}
+
+/* ===== Top Bar ===== */
+
+.top-bar {
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 2px solid #ddd;
+}
+
+/* Hide default arrows (for number input fields) in Chrome, Safari, Edge, and Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+/* Hide default arrows (for number input fields) in Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+.number-input {
+    display: flex;
+    align-items: center;
+    width: 120px;
+}
+
+.number-input-column {
+    display: flex;
+    flex-direction: column;
+    height: 60px;
+}
+
+.number-input input {
+    width: 80px;
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 0.2rem;
+}
+
+.number-input p {
+    height: 14px;
+    text-align: center;
+    font-size: 12px;
+    margin: 3px;
+}
+
+.number-input button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0.2rem;
+    width: 30px;
+}
+
+/* Used to set the arrow button icons */
+.arrow-up::after {
+    content: "▲";
+}
+.arrow-down::after {
+    content: "▼";
+}
+
+.search-bar {
+    display: flex;
+    width: 600px;
+    color: black;
+    height: 40px;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.search-bar input {
+
+    border: 1px solid rgba(176, 176, 176, 0.5);
+    border-radius: 20px;
+    width: 90%;
+}
+
+.hamburger-menu {
+    background: none;
+    border: 1px solid black;
+    border-radius: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 7px 5px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.hamburger-menu-bar {
+    width: 100%;
+    height: 2px;
+    background-color: #333; /* Color of the lines that make the hamburger */
+    border-radius: 2px;
+}
+
+.calorie-progress-bar {
+    display: flex;
+    width: 500px;
+    height: 30px;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.calorie-progress-bar-container {
+    width: 90%;
+    height: 100%;
+    background-color: #ddd;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.calorie-progress-bar-fill {
+    width: 0%;
+    height: 100%;
+    background-color: #4caf50;
+    border-radius: 15px 0 0 15px;
+    transition: width 0.3s ease-in-out;
+}
+
+.calorie-progress-bar-search-button {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.profile-button {
+    background: none;
+    border: 1px solid black;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.back-button {
+    position: absolute;
+    left: 20px;
+    height: 30px;
+    width: 30px;
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.6rem;
+}
+
+/* ===== Pages ===== */
+
+.page-home {
+    padding: 20px;
+}
+
+/* ===== Home Page ===== */
+
+.list-recommended {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+
+.item-recommended {
+    width: 25%;
+    height: 300px;
+    margin:2px;
+    background-color: #fafafa;
+    border: 0.5px solid rgb(178, 178, 178);
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    border-radius: 5%;
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.item-recommended:hover {
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.list-scroll {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+}
+
+.item-cuisine {
+    width: 300px;
+    height: 300px;
+    background-color: #4caf50;
+    color: white;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+/* ===== Merchant Page ===== */
+
+.page-merchant {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.layout-merchant {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+}
+
+.list-scroll-merchant {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    gap: 1rem;
+    margin-left: 20px;
+}
+
+.item-merchant {
+    width: 300px;
+    height: 500px;
+    background-color: #4caf50;
+    color: white;
+    border: 1px solid black;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.cart-merchant {
+    width: 25%;
+    height: 500px;
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    margin-left: 20px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.scroll-list-merchant-cart {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    gap: 10px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+.item-cart {
+    height: 50px;
+    background-color: #4caf50;
+    color: white;
+    border: 1px solid black;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+/* ===== Cart Page ===== */
+
+.layout-cart {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 100px;
+    display: flex;
+    flex-direction: row;
+}
+
+.section-cart {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    padding: 20px;
+    text-align: center;
+    gap: 20px;
+}
+.section-cart:first-child {
+    border-right: 2px solid #ddd;
+}
+
+.map-cart {
+    width: 100%;
+    height: 500px;
+    background-color: #4caf50;
+    color: white;
+    border: 1px solid black;
+    border-radius: 8px;
+    font-size: 1.5rem;
+    align-content: center;
+}
+
+.scroll-list-cart {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+/* ===== Popups ===== */
+
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 500;
+}
+
+.popup {
+    width: 500px;
+    height: 400px;
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 501;
+    justify-content: space-between;
+    flex-direction: column;
+    text-align: center;
+}
+
+.close-button {
+    width: 25px;
+    height: 25px;
+    border: 1px solid black;
+    border-radius: 50%;
+    background-color: white;
+    color: black;
+    font-size: 30px;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 20px;
+    right: 20px;
+}
+.close-button:hover {
+    background-color: #e6e6e6;
+}
+.close-button:active {
+    background-color: #bebebe;
+    box-shadow: none;
+}
+
+.preferences-calorie-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+}

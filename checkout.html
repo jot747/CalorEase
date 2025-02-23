@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout with Map</title>
+    <!-- Include Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Include Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+
+        @font-face {
+            font-family: 'JustSans';
+            src: url('justsans.woff2') format('truetype');
+        }
+
+        .chout
+        {
+            font-family: 'JustSans', Arial, sans-serif;
+            font-size: 2em;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            width: 95%; /* Increased width */
+            max-width: 1600px; /* Increased max-width */
+            height: 90%; /* Increased height */
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Left side (map and delivery address) */
+        .left-side {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 10px;
+            border-right: 2px solid #ccc;
+            position: relative; /* Added relative positioning */
+            height: 92%;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .back-btn {
+            background-color: transparent;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            color: #007bff;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 97%;
+            padding: 10px;
+            margin-top: 5px;
+            border-width:10px;
+            border-radius: 20px;
+            border: 1px solid #0d540e;
+        }
+
+        #map {
+            height: 60vh; /* Increased map height */
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        /* Right side (cart and items) */
+        .right-side {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative; /* To position the Pay Now button at the bottom right */
+        }
+
+        .right-side h2 {
+            margin-top: 0;
+        }
+
+        .cart-item {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .total {
+            font-weight: bold;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .submit-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background-color: #218838;
+        }
+
+        /* Pay Now Button - right side */
+        .pay-now-btn {
+            background-color: #2ecc71;
+            border-radius: 25px;
+            color: white;
+            padding: 15px;
+            border: none;
+            text-align: center;
+            cursor: pointer;
+            font-size: 16px;
+            position: absolute; /* Positioned absolutely at the bottom right */
+            bottom: 20px;
+            right: 20px;
+            width: 80%;
+        }
+
+        .pay-now-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Left side (Map and Delivery Address) -->
+        <div class="left-side">
+            <div class="header">
+                <button class="back-btn"><i class="fas fa-arrow-left"></i></button>
+                <h1 class="chout">Checkout</h1>
+            </div>
+
+            <form id="checkout-form">
+                <div class="form-group">
+                    <label for="address">Shipping Address</label>
+                    <input type="text" id="address" placeholder="Click on map to select address" readonly>
+                </div>
+                <div id="map"></div>
+            </form>
+        </div>
+
+        <!-- Right side (Cart and Items) -->
+        <div class="right-side">
+            <h2>Your Cart</h2>
+            <div id="cart-items">
+                <!-- Cart items will be dynamically inserted here -->
+            </div>
+            <div class="total">
+                <span>Total</span>
+                <span id="total-price">$0.00</span>
+            </div>
+
+            <!-- Pay Now Button at the bottom right of the right side -->
+            <div class="pay-now-btn">Pay Now</div>
+        </div>
+    </div>
+
+    <!-- Include Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        let map, marker;
+        const cart = [
+            { name: "Subway Club", price: 6.99 },
+            { name: "Tuna Sub", price: 7.49 },
+        ];
+        const totalPriceElement = document.getElementById("total-price");
+
+        // Initialize Leaflet map
+        function initMap() {
+            map = L.map('map').setView([40.730610, -73.935242], 14);
+
+            // Add OpenStreetMap tiles to the map
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            marker = L.marker([40.730610, -73.935242], {
+                draggable: true
+            }).addTo(map);
+
+            // Listen for marker drag event
+            marker.on('dragend', function() {
+                const latLng = marker.getLatLng();
+                geocodeLatLng(latLng);
+            });
+
+            // Listen for map click event
+            map.on('click', function(e) {
+                marker.setLatLng(e.latlng);
+                geocodeLatLng(e.latlng);
+            });
+        }
+
+        // Geocode the latitude and longitude to get the address
+        function geocodeLatLng(latLng) {
+            const lat = latLng.lat;
+            const lng = latLng.lng;
+            const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const address = data.display_name;
+                    document.getElementById('address').value = address;
+                })
+                .catch(error => console.error('Error fetching address:', error));
+        }
+
+        // Function to update the cart display
+        function updateCart() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            cartItemsContainer.innerHTML = '';
+
+            let total = 0;
+            cart.forEach(item => {
+                const cartItemDiv = document.createElement('div');
+                cartItemDiv.classList.add('cart-item');
+                cartItemDiv.innerHTML = `
+                    <span>${item.name}</span>
+                    <span>$${item.price.toFixed(2)}</span>
+                `;
+                cartItemsContainer.appendChild(cartItemDiv);
+                total += item.price;
+            });
+
+            totalPriceElement.textContent = `$${total.toFixed(2)}`;
+        }
+
+        window.onload = function() {
+            initMap();
+            updateCart();
+        };
+
+        const backButton = document.querySelector('.back-btn');
+        backButton.addEventListener('click', function() {
+            window.history.back(); // Navigate to the previous page
+        });
+    </script>
+
+</body>
+</html>

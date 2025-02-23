@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Delivery App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        @font-face {
+            font-family: 'JustSans';
+            src: url('justsans.woff2') format('truetype');
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgb(244, 244, 249);
+            margin: 0;
+            padding: 0;
+        }
+
+        .logo {
+            text-align: center;
+            font-family: "JustSans";
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgb(255, 255, 255);
+            font-style: bold;
+            font-size: 45px;
+            color: rgb(0, 0, 0);
+            padding-top: 4px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgb(255, 255, 255);
+            font-style: bold;
+            color: rgb(0, 0, 0);
+            padding: 10px;
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .calories-section {
+            display: flex;
+            align-items: center;
+        }
+
+        .calories-button {
+            font-family: 'JustSans', Arial, sans-serif;
+            background-color: rgb(255, 255, 255);
+            border: none;
+            color: rgb(0, 0, 0);
+            border: 1px solid rgb(204, 204, 204);
+            font-size: 20px;
+            box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .calories-button:hover {
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .calories-text {
+            font-family: 'JustSans', Arial, sans-serif;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            font-size: 22px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: 2px solid rgb(204, 204, 204);
+            width: 100px;
+            text-align: center;
+        }
+
+        .search-bar {
+            padding: 10px 15px;
+            border-radius: 25px;
+            border: 2px solid rgb(204, 204, 204);
+            width: 500px;
+            font-size: 16px;
+        }
+
+        .empty-space {
+            width: 8%;
+        }
+
+        .filter-button, .search-button, .go-button {
+            background-color: rgb(46, 204, 113);
+            color: rgb(255, 255, 255);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: box-shadow 0.3s ease;
+            font-size: 20px;
+            margin-left: 0%;
+        }
+
+        .filter-button i, .search-button i {
+            font-size: 20px;
+        }
+
+        .filter-button:hover, .search-button:hover {
+            box-shadow: 0px 0px 10px rgb(46, 204, 113);
+        }
+
+        .account-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgb(231, 76, 60);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgb(255, 255, 255);
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .scroll-container {
+            display: flex;
+            overflow-x: scroll;
+            margin: 20px 0;
+            gap: 1%;
+            padding: 10px;
+        }
+
+        .scroll-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .section-title {
+            font-family: 'JustSans', Arial, sans-serif;
+            height: 20px;
+            font-size: 30px;
+            margin-left: 20px;
+            margin-bottom: 15px;
+            color: rgb(51, 51, 51);
+            margin-top: 20px;
+        }
+
+        .scroll-item {
+            background-color: rgb(255, 255, 255);
+            border-radius: 15px;
+            padding: 10px;
+            text-align: center;
+            width: 280px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            flex-shrink: 0;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .scroll-item:hover {
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transform: scale(1.05);
+        }
+
+        .scroll-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .scroll-item p {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .scroll-item .calories {
+            font-size: 14px;
+            color: rgb(136, 136, 136);
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="calories-section">
+            <button class="calories-button" id="subtractBtn">-</button>
+            <p class="calories-text" id="caloriesText">500</p>
+            <button class="calories-button" id="addBtn">+</button>
+        </div>
+
+        <div></div>
+        
+        <input type="text" class="search-bar" placeholder="Search for food, restaurants...">
+        <div class="sf-section">
+            <button class="search-button"><i class="fas fa-search"></i></button>
+            <button class="filter-button"><i class="fas fa-filter"></i></button> 
+        </div>
+
+        <div></div>
+        <div></div>
+        <div class="empty-space"></div>
+
+        <div class="account-icon">
+            <i class="fas fa-user"></i>
+        </div>
+    </div>
+
+    <!-- Body of Homepage -->
+
+    <!-- Recommended Section -->
+    <div class="section-title">Recommended</div>
+    <div class="scroll-container">
+        <div class="scroll-item">
+            <a href="restaurant.html?restaurant=Subway">
+                <img src="subway.jpeg" alt="Subway">
+                <p>Subway</p>
+                <p class="calories">Average Calories: 350</p>
+            </a>
+        </div>
+        <div class="scroll-item">
+            <a href="restaurant.html?restaurant=NuBurger">
+                <img src="nuburger.jpeg" alt="NuBurger">
+                <p>NuBurger</p>
+                <p class="calories">Average Calories: 450</p>
+            </a>
+        </div>
+        <div class="scroll-item">
+            <a href="restaurant.html?restaurant=BoosterJuice">
+                <img src="boosterjuice.jpeg" alt="Booster Juice">
+                <p>Booster Juice</p>
+                <p class="calories">Average Calories: 300</p>
+            </a>
+        </div>
+        <div class="scroll-item">
+            <a href="restaurant.html?restaurant=Freshii">
+                <img src="freshii.jpeg" alt="Freshii">
+                <p>Freshii</p>
+                <p class="calories">Average Calories: 400</p>
+            </a>
+        </div>
+        <div class="scroll-item">
+            <a href="restaurant.html?restaurant=Qdoba">
+                <img src="qdoba.jpeg" alt="Qdoba">
+                <p>Qdoba</p>
+                <p class="calories">Average Calories: 500</p>
+            </a>
+        </div>
+    </div>
+
+    <!-- Cuisines Section -->
+    <div class="section-title">Cuisines</div>
+    <div class="scroll-container">
+        <div class="scroll-item">
+            <img src="italian.jpeg" alt="Italian">
+            <p>Italian</p>
+            <p class="calories">Average Calories: 600</p>
+        </div>
+        <div class="scroll-item">
+            <img src="chinese.jpeg" alt="Chinese">
+            <p>Chinese</p>
+            <p class="calories">Average Calories: 700</p>
+        </div>
+        <div class="scroll-item">
+            <img src="indian.jpeg" alt="Indian">
+            <p>Indian</p>
+            <p class="calories">Average Calories: 750</p>
+        </div>
+        <div class="scroll-item">
+            <img src="seafood.jpeg" alt="Seafood">
+            <p>Seafood</p>
+            <p class="calories">Average Calories: 500</p>
+        </div>
+        <div class="scroll-item">
+            <img src="coffee.jpeg" alt="Coffee">
+            <p>Coffee</p>
+            <p class="calories">Average Calories: 100</p>
+        </div>
+    </div>
+
+    <script>
+        let calories = 500;
+        const caloriesText = document.getElementById("caloriesText");
+        const addBtn = document.getElementById("addBtn");
+        const subtractBtn = document.getElementById("subtractBtn");
+
+        addBtn.addEventListener('click', () => {
+            calories += 20;
+            caloriesText.textContent = calories;
+        });
+
+        subtractBtn.addEventListener('click', () => {
+            calories -= 20;
+            caloriesText.textContent = calories;
+        });
+
+        function createPreferencesPopup() {
+            const preferencePopup = document.createElement('div');
+            preferencePopup.id = 'preferencePopup';
+            preferencePopup.style.position = 'fixed';
+            preferencePopup.style.top = '0';
+            preferencePopup.style.left = '0';
+            preferencePopup.style.width = '100%';
+            preferencePopup.style.height = '100%';
+            preferencePopup.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+            preferencePopup.style.display = 'flex';
+            preferencePopup.style.justifyContent = 'center';
+            preferencePopup.style.alignItems = 'center';
+            preferencePopup.style.zIndex = '1000';
+
+            const preferencePopupContent = document.createElement('div');
+            preferencePopupContent.style.backgroundColor = 'rgb(255, 255, 255)';
+            preferencePopupContent.style.padding = '20px';
+            preferencePopupContent.style.borderRadius = '8px';
+            preferencePopupContent.style.width = '300px';
+
+            const header = document.createElement('h2');
+            header.textContent = 'Preferences';
+            header.style.fontFamily = 'JustSans, Arial, sans-serif';
+            preferencePopupContent.appendChild(header);
+
+            const labels = ['Fats', 'Proteins', 'Carbs'];
+            labels.forEach(label => {
+                const labelElement = document.createElement('label');
+                labelElement.textContent = label;
+                labelElement.style.display = 'block';
+                labelElement.style.marginTop = '10px';
+
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.placeholder = `Enter ${label} (g)`;
+                input.style.width = '100%';
+                input.style.padding = '8px';
+                input.style.marginTop = '5px';
+                input.style.borderRadius = '5px';
+                input.style.border = '1px solid rgb(204, 204, 204)';
+
+                preferencePopupContent.appendChild(labelElement);
+                preferencePopupContent.appendChild(input);
+            });
+
+            const footer = document.createElement('div');
+            footer.style.marginTop = '20px';
+            footer.style.textAlign = 'center';
+
+            const applyBtn = document.createElement('button');
+            applyBtn.textContent = 'Apply';
+            applyBtn.style.padding = '10px 20px';
+            applyBtn.style.borderRadius = '20px';
+            applyBtn.style.backgroundColor = 'rgb(46, 204, 113)';
+            applyBtn.style.color = 'rgb(255, 255, 255)';
+            applyBtn.style.border = 'none';
+            applyBtn.style.cursor = 'pointer';
+            applyBtn.style.marginRight = '12px';
+            applyBtn.onclick = () => {
+                preferencePopup.style.display = 'none';
+            };
+
+            const closeBtn = document.createElement('button');
+            closeBtn.textContent = 'Close';
+            closeBtn.style.padding = '10px 20px';
+            closeBtn.style.borderRadius = '20px';
+            closeBtn.style.backgroundColor = 'rgb(231, 76, 60)';
+            closeBtn.style.color = 'rgb(255, 255, 255)';
+            closeBtn.style.border = 'none';
+            closeBtn.style.cursor = 'pointer';
+            closeBtn.onclick = () => preferencePopup.style.display = 'none';
+
+            footer.appendChild(applyBtn);
+            footer.appendChild(closeBtn);
+            preferencePopupContent.appendChild(footer);
+
+            preferencePopup.appendChild(preferencePopupContent);
+            document.body.appendChild(preferencePopup);
+        }
+
+        document.querySelector('.filter-button').addEventListener('click', createPreferencesPopup);
+    </script>
+</body>
+</html>

@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subway Food Delivery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+
+        @font-face {
+            font-family: 'JustSans';
+            src: url('justsans.woff2') format('truetype');
+        }
+
+        a {
+            text-decoration: none; 
+            color: inherit;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body and overall layout */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            color: #000000;
+            padding: 10px;
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1); 
+        }
+
+        /* Calories Section */
+        .calories-section {
+            display: flex;
+            align-items: center;
+        }
+
+        .calories-button {
+            font-family: 'JustSans', Arial, sans-serif;
+            background-color: #ffffff;
+            border: none;
+            color: rgb(0, 0, 0);
+            border: 1px solid #ccc;
+            font-size: 20px;
+            box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: box-shadow 0.3s ease; 
+        }
+
+        .calories-button:hover {
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .calories-text {
+            font-family: 'JustSans', Arial, sans-serif;
+            box-shadow:  0 4px 10px rgba(0, 0, 0, 0.1);;
+            font-size: 20px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: 2px solid #ccc;
+            width: 130px;
+            text-align: center;
+        }
+
+        /* Sub-menu styling */
+        .sub-menu {
+            display: flex;
+            align-items: center;
+            margin-left: 30%;  
+            margin-top: 20px; 
+            gap: 20px;
+        }
+
+        .sub-menu-options {
+            font-family: "JustSans";
+            background-color: #fff;
+            padding: 10px 20px;
+            border-radius: 25px;  
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        /* Hover effect */
+        .sub-menu-options:hover {
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Active (selected) option style */
+        .sub-menu-options.selected {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+
+        /* Menu section */
+        .menu {
+            margin-top: 2%; /* space for top bar */
+            padding: 0;
+            position: relative;
+            height: 100vh;
+        }
+
+        /* Make the cards stretch all the way across */
+        .menu-cards {
+            display: flex;
+            overflow-x: auto;
+            gap: 1px;
+            justify-content: flex-start;
+            height: 100vh;
+            width: 80%; /* Take up 75% of the screen */
+            margin-left: 25%; 
+            padding-right: 0; /* Remove padding on the right side */
+        }
+
+        .back-button {
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px 15px;
+            height: 100%;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-right: 20px; /* Space between the back button and calories section */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .back-button i {
+            font-size: 18px; /* Icon size */
+            margin-right: 5px; /* Space between icon and text */
+        }
+        
+        .back-button:hover {
+            box-shadow: 0px 0px 10px #e74c3c;
+        }
+
+        .menu-card {
+            width: 250px;
+            height: 100vh;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            flex-shrink: 0; 
+        }
+
+        .menu-card h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .menu-card p {
+            font-size: 16px;
+            color: #777;
+        }
+
+        .search-bar {
+            padding: 10px 15px;
+            border-radius: 25px;
+            border: 2px solid #ccc;
+            width: 500px;
+            font-size: 16px;
+            display: none; /* Initially hidden */
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            width: 500px;
+            height: 50px;
+            border-radius: 25px;
+            background-color: #e0e0e0;
+            display: block; 
+        }
+
+        .progress-bar span {
+            display: block;
+            height: 100%;
+            background-color: #2ecc71;
+            width: 0%;
+            border-radius: 25px;
+        }
+
+        /* Button styles */
+        .sf-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .filter-button, .search-button {
+            background-color: #2ecc71;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: box-shadow 0.3s ease; 
+            font-size: 20px;
+            margin-left: 10px; 
+        }
+
+        .filter-button i, .search-button i {
+            font-size: 20px;
+        }
+
+        .filter-button:hover, .search-button:hover {
+            box-shadow: 0px 0px 10px #2ecc71;
+        }
+
+        .account-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #e74c3c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .menu-card {
+            display: flex;
+            flex-direction: column; 
+            justify-content: space-between; 
+            border: 1px solid #ddd;
+            padding: 5px;
+            margin: 5px;
+            background-color: white;
+            max-width: 300px;
+            height: 75vh; 
+            box-sizing: border-box;
+        }
+
+        .menu-card:hover {
+
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1); 
+
+
+        }
+
+        .menu-card .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-card .card-title {
+            font-family: "JustSans";
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+
+        .menu-card .card-img {
+            width: 100%;
+            height: auto;
+            margin: 10px 0;
+        }
+
+        .menu-card .info {
+            display: flex;
+            flex-direction: column;
+            margin-top: auto;
+        }
+
+        .price{
+            
+            font-size: 1.5em;
+            font-style: bold;
+
+            color:black;
+        }
+
+        .menu-card .add-to-cart {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width:100%;
+            height: 12%;
+            margin-top: 20px;
+            box-sizing: border-box; 
+        }
+
+        .edit {
+            
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            font-size: 1.0em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width:100%;
+            height: 7%;
+            margin-top: 20px;
+        }
+
+        .menu-card .add-to-cart:hover {
+            background-color: #45a049;
+        }
+
+        /* Cart container styles */
+        .cart {
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            top: 100px;        
+            left: 20px;      
+            width: 40vh;     
+            height: 80vh;     
+            background-color: #f8f8f8; 
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+            z-index: 1000;   
+            font-family: Arial, sans-serif;
+        }
+
+        /* Cart header */
+        .cart h3 {
+            font-family: "JustSans";
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        /* Cart items list */
+        #cart-items {
+            max-height: 70vh; /* Set a maximum height for the cart items */
+            overflow-y: auto; 
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .quan
+        {
+            background-color: #65dd97;
+            border:none;
+            border-radius: 20px;
+            width:25px;
+            box-shadow: 0 0px 2px rgba(0, 0, 0, 0.3); 
+            font-style: bold;
+            height:25px;
+
+        }
+
+        .quan:hover
+        {
+            cursor:pointer
+
+        }
+
+        /* Cart item style */
+        #cart-items li {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 5px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* Total price section */
+        #cart-total {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* Checkout button style */
+        #checkout-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: rgb(46, 204, 113);
+            color: rgb(255, 255, 255);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 20px;
+            margin-top: auto; /* This pushes the button down */
+            transition: background-color 0.3s ease;
+        }
+
+        #checkout-btn:hover {
+            background-color: #27ae60;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <!-- Calories Section -->
+        <div id="backBtn" class="back-button">
+            <a href="index.html"><i class="fas fa-arrow-left"></i> </a>
+        </div>
+
+        <div class="calories-section">
+            <button id="subtractBtn" class="calories-button">-</button>
+            <span id="caloriesText" class="calories-text">500 cal</span>
+            <button id="addBtn" class="calories-button">+</button>
+        </div>
+
+        <!-- Search and Filter Section -->
+        <div class="sf-section">
+            <input type="text" class="search-bar" placeholder="Search for food..." id="searchBar">
+            <div class="progress-bar" id="progressBar">
+                <span id="progress"></span>
+            </div>
+            <button class="search-button" id="searchButton"><i class="fas fa-search"></i></button>
+            <button class="filter-button"><i class="fas fa-filter"></i></button> 
+        </div>
+
+        <div></div>
+        <div class="empty-space"></div>
+
+        <!-- Account Icon -->
+        <div class="account-icon">
+            <i class="fas fa-user"></i>
+        </div>
+    </div>
+
+    <!-- Sub-menu options -->
+    <div class="sub-menu">
+        <div class="sub-menu-options" id="sandwiches">Sandwiches</div>
+        <div class="sub-menu-options" id="wraps">Wraps</div>
+        <div class="sub-menu-options" id="salads">Salads</div>
+        <div class="sub-menu-options" id="drinks">Drinks</div>
+    </div>
+
+    <!-- Menu Cards -->
+    <div class="menu">
+        <div class="menu-cards" id="menuCards">
+            <!-- Menu cards will be inserted here dynamically -->
+        </div>
+    </div>
+
+    <div id="cart" class="cart">
+        <h3>YOUR CART </h3>
+        <ul id="cart-items">
+            <!-- Cart items will be dynamically added here -->
+        </ul>
+        <div id="cart-total">
+            <p>Total: $<span id="total-price">0.00</span></p>
+        </div>
+        <button id="checkout-btn">Checkout</button>
+    </div>
+    
+
+    <script>
+
+
+
+        const menuItems = {
+            sandwiches: [
+                { 
+                    name: "Subway Club", 
+                    description: "Turkey, ham, roast beef, and Swiss cheese", 
+                    calories: 480, 
+                    image: "sandwiches1.jpg", 
+                    carbs: 40, 
+                    fats: 15, 
+                    proteins: 25,
+                    price: 6.99
+                },
+                { 
+                    name: "Meatball Sub", 
+                    description: "Tuna salad with lettuce, tomatoes, and pickles", 
+                    calories: 500, 
+                    image: "sandwiches2.jpg", 
+                    carbs: 45, 
+                    fats: 20, 
+                    proteins: 30,
+                    price: 7.49
+                },
+                { 
+                    name: "Veggie Delight", 
+                    description: "Lettuce, tomatoes, cucumbers, and olives on whole wheat bread", 
+                    calories: 300, 
+                    image: "sandwiches3.jpg", 
+                    carbs: 50, 
+                    fats: 5, 
+                    proteins: 10,
+                    price: 5.99
+                },
+                { 
+                    name: "Italian BMT", 
+                    description: "Pepperoni, salami, and ham with melted mozzarella", 
+                    calories: 600, 
+                    image: "sandwiches4.jpg", 
+                    carbs: 50, 
+                    fats: 25, 
+                    proteins: 30,
+                    price: 7.99
+                },
+                { 
+                    name: "Chicken Bacon Ranch", 
+                    description: "Grilled chicken, bacon, and ranch dressing", 
+                    calories: 550, 
+                    image: "sandwiches5.jpg", 
+                    carbs: 40, 
+                    fats: 30, 
+                    proteins: 35,
+                    price: 8.49
+                }
+            ],
+            wraps: [
+                { 
+                    name: "Chicken Caesar Wrap", 
+                    description: "Grilled chicken, Caesar dressing, and lettuce", 
+                    calories: 350, 
+                    image: "wraps1.jpg", 
+                    carbs: 40, 
+                    fats: 12, 
+                    proteins: 25,
+                    price: 7.49
+                },
+                { 
+                    name: "Veggie Wrap", 
+                    description: "Crisp veggies with hummus", 
+                    calories: 250, 
+                    image: "wraps2.jpg", 
+                    carbs: 40, 
+                    fats: 10, 
+                    proteins: 8,
+                    price: 6.49
+                },
+                { 
+                    name: "Turkey & Bacon Wrap", 
+                    description: "Turkey, bacon, lettuce, and tomatoes wrapped in a tortilla", 
+                    calories: 400, 
+                    image: "wraps3.jpg", 
+                    carbs: 45, 
+                    fats: 18, 
+                    proteins: 28,
+                    price: 7.99
+                },
+                { 
+                    name: "Spicy Italian Wrap", 
+                    description: "Italian sausage, pepperoni, and hot peppers", 
+                    calories: 500, 
+                    image: "wraps4.jpg", 
+                    carbs: 45, 
+                    fats: 25, 
+                    proteins: 30,
+                    price: 8.29
+                },
+                { 
+                    name: "Buffalo Chicken Wrap", 
+                    description: "Buffalo chicken with ranch and lettuce", 
+                    calories: 450, 
+                    image: "wraps5.jpg", 
+                    carbs: 40, 
+                    fats: 18, 
+                    proteins: 35,
+                    price: 8.49
+                }
+            ],
+            salads: [
+                { 
+                    name: "Chicken Salad", 
+                    description: "Grilled chicken, mixed greens, and dressing", 
+                    calories: 350, 
+                    image: "salads1.jpg", 
+                    carbs: 20, 
+                    fats: 15, 
+                    proteins: 35,
+                    price: 6.99
+                },
+                { 
+                    name: "Veggie Salad", 
+                    description: "Mixed greens, cucumbers, tomatoes, olives, and carrots", 
+                    calories: 150, 
+                    image: "salads2.jpg", 
+                    carbs: 30, 
+                    fats: 5, 
+                    proteins: 6,
+                    price: 5.49
+                },
+                { 
+                    name: "Tuna Salad", 
+                    description: "Tuna salad with lettuce, tomatoes, and onions", 
+                    calories: 400, 
+                    image: "salads3.jpg", 
+                    carbs: 20, 
+                    fats: 20, 
+                    proteins: 35,
+                    price: 7.99
+                },
+                { 
+                    name: "Steak Salad", 
+                    description: "Steak, mixed greens, and ranch dressing", 
+                    calories: 500, 
+                    image: "salads4.jpg", 
+                    carbs: 25, 
+                    fats: 30, 
+                    proteins: 40,
+                    price: 9.99
+                },
+                { 
+                    name: "Caesar Salad", 
+                    description: "Romaine lettuce, Caesar dressing, and Parmesan cheese", 
+                    calories: 300, 
+                    image: "salads5.jpg", 
+                    carbs: 15, 
+                    fats: 20, 
+                    proteins: 15,
+                    price: 6.49
+                }
+            ],
+            drinks: [
+                { 
+                    name: "Coca-Cola", 
+                    description: "Classic soda", 
+                    calories: 150, 
+                    image: "drinks1.jpg", 
+                    carbs: 35, 
+                    fats: 0, 
+                    proteins: 0,
+                    price: 1.99
+                },
+                { 
+                    name: "Lemonade", 
+                    description: "Refreshing lemon drink", 
+                    calories: 120, 
+                    image: "drinks2.jpg", 
+                    carbs: 30, 
+                    fats: 0, 
+                    proteins: 0,
+                    price: 2.49
+                },
+                { 
+                    name: "Iced Tea", 
+                    description: "Sweetened or unsweetened iced tea", 
+                    calories: 90, 
+                    image: "drinks3.jpg", 
+                    carbs: 20, 
+                    fats: 0, 
+                    proteins: 0,
+                    price: 1.89
+                },
+                { 
+                    name: "Water", 
+                    description: "Refresh yourself with water", 
+                    calories: 0, 
+                    image: "drinks4.jpg", 
+                    carbs: 0, 
+                    fats: 0, 
+                    proteins: 0,
+                    price: 0.99
+                },
+                { 
+                    name: "Orange Juice", 
+                    description: "Freshly squeezed orange juice", 
+                    calories: 160, 
+                    image: "drinks5.jpg", 
+                    carbs: 40, 
+                    fats: 0, 
+                    proteins: 1,
+                    price: 2.79
+                }
+            ]
+        };
+        
+        
+        let cart = [];
+        let totalCalories = 0;
+        let totalPrice = 0;
+    
+        // Function to update the cart UI
+        function updateCart() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            //const totalCaloriesElement = document.getElementById('caloriesText');
+            const totalPriceElement = document.getElementById('total-price');
+    
+            // Clear the cart container
+            cartItemsContainer.innerHTML = '';
+    
+            // Populate the cart with items
+            cart.forEach((item, index) => {
+                const cartItem = document.createElement('li');
+                cartItem.classList.add('cart-item');
+    
+                cartItem.innerHTML = `
+                    <div>
+                        <span>${item.name}</span>
+                        <br>
+                        <span>Calories: ${item.calories * item.quantity} cal</span>
+                        <br>
+                        <span>Price: $${(item.price * item.quantity).toFixed(2)}</span>
+                    </div>
+                    <div class="quantity-controls">
+                        <button class="quan"onclick="updateQuantity(${index}, -1)">-</button>
+                        <span>${item.quantity}</span>
+                        <button class="quan"onclick="updateQuantity(${index}, 1)">+</button>
+                    </div>
+                `;
+    
+                cartItemsContainer.appendChild(cartItem);
+            });
+    
+            // Update total calories and price
+            //totalCaloriesElement.textContent = totalCalories;
+            totalPriceElement.textContent = totalPrice.toFixed(2);
+        }
+    
+        // Function to add an item to the cart
+        function addToCart(index, category) {
+            const item = menuItems[category][index];
+    
+            // Check if item is already in the cart
+            const cartItemIndex = cart.findIndex(cartItem => cartItem.name === item.name);
+    
+            if (cartItemIndex > -1) {
+                // If item exists, increase the quantity
+                cart[cartItemIndex].quantity++;
+            } else {
+                // Add new item to cart
+                cart.push({ ...item, quantity: 1 });
+            }
+    
+            // Update total calories and price
+            totalCalories += item.calories;
+            totalPrice += item.price;
+    
+            // Update cart UI
+            updateCart();
+        }
+    
+        // Function to update the quantity of an item in the cart
+        function updateQuantity(index, change) {
+            const cartItem = cart[index];
+        
+            if (cartItem.quantity + change <= 0) {
+                // Adjust the total before removing the item
+                totalCalories -= cartItem.calories * cartItem.quantity;
+                totalPrice -= cartItem.price * cartItem.quantity;
+        
+                // Remove the item from the cart
+                cart.splice(index, 1);
+            } else {
+                // Adjust totals for the change in quantity
+                totalCalories += cartItem.calories * change;
+                totalPrice += cartItem.price * change;
+        
+                // Update the item's quantity
+                cartItem.quantity += change;
+            }
+        
+            // Ensure totals don't go below zero (optional safeguard)
+            totalCalories = Math.max(0, totalCalories);
+            totalPrice = Math.max(0, totalPrice);
+        
+            // Update cart UI
+            updateCart();
+        }
+        
+
+
+        // Function to update the menu cards dynamcally
+        function updateMenu(category) {
+            const cardsContainer = document.getElementById('menuCards');
+            cardsContainer.innerHTML = ''; // Clear existing menu cards
+        
+            menuItems[category].forEach((item, index) => {
+                const card = document.createElement('div');
+                card.classList.add('menu-card');
+                card.innerHTML = `
+                    <div class="top">
+                        <h2 class="card-title">${item.name}</h2>
+                    </div>
+                    <img src="${item.image}" alt="${item.name} Image" class="card-img">
+                    <div class="info">
+                        <div class="nutritional-info">
+                            <p>Calories: ${item.calories}<br><br></p>
+                            <p>Carbohydrates: ${item.carbs}g</p>
+                            <p>Fats: ${item.fats}g</p>
+                            <p>Proteins: ${item.proteins}g</p>
+                        </div>
+                        <div class=price><br>$${item.price}</div>
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart(${index}, '${category}')">Add to Cart</button>
+                `;
+                cardsContainer.appendChild(card);
+            });
+        }
+        
+        
+
+        // Add event listeners to sub-menu options
+        document.getElementById('sandwiches').addEventListener('click', () => {
+            updateMenu('sandwiches');
+            setActiveOption('sandwiches');
+        });
+
+        document.getElementById('wraps').addEventListener('click', () => {
+            updateMenu('wraps');
+            setActiveOption('wraps');
+        });
+
+        document.getElementById('salads').addEventListener('click', () => {
+            updateMenu('salads');
+            setActiveOption('salads');
+        });
+
+        document.getElementById('drinks').addEventListener('click', () => {
+            updateMenu('drinks');
+            setActiveOption('drinks');
+        });
+
+        // Function to set the active class on the selected option
+        function setActiveOption(selected) {
+            const options = document.querySelectorAll('.sub-menu-options');
+            options.forEach(option => {
+                if (option.id === selected) {
+                    option.classList.add('selected');
+                } else {
+                    option.classList.remove('selected');
+                }
+            });
+        }
+
+        // Default category to show on page load
+        window.onload = () => {
+            updateMenu('sandwiches');
+            setActiveOption('sandwiches');
+        };
+        let calories = 500;
+        const caloriesText = document.getElementById("caloriesText");
+        const addBtn = document.getElementById("addBtn");
+        const subtractBtn = document.getElementById("subtractBtn");
+
+        addBtn.addEventListener('click', () => {
+            calories += 20;
+            caloriesText.textContent = calories+ " cal";
+        });
+
+        subtractBtn.addEventListener('click', () => {
+            calories -= 20;
+            caloriesText.textContent = calories+" cal";
+        });
+
+        // Create preferences-popup modal dynamically
+
+        function createAccountPopup()
+        {
+            const accInfo = document.createElement('div');
+            accInfo.id = 'account-popup';
+            accInfo.style.position = 'fixed';
+            accInfo.style.top = '0';
+            accInfo.style.left = '0';
+            accInfo.style.backgroundColor = 'white';
+            accInfo.style.padding = '20px';
+            accInfo.style.borderRadius = '8px';
+            accInfo.style.width = '300px'; 
+            accInfo.style.height='100px';
+            document.body.appendChild(accInfo);
+
+        }
+
+        function createPreferencesPopup() {
+            // Create modal container
+            const modal = document.createElement('div');
+            modal.id = 'preferences-popup';
+            modal.style.position = 'fixed';
+            modal.style.top = '0';
+            modal.style.left = '0';
+            modal.style.width = '100%';
+            modal.style.height = '100%';
+            modal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+            modal.style.display = 'flex';
+            modal.style.justifyContent = 'center';
+            modal.style.alignItems = 'center';
+            modal.style.zIndex = '1000';
+
+            // Create modal content container
+            const modalContent = document.createElement('div');
+            modalContent.style.backgroundColor = 'white';
+            modalContent.style.padding = '20px';
+            modalContent.style.borderRadius = '8px';
+            modalContent.style.width = '300px';
+
+            // Create header with Preferences title
+            const header = document.createElement('h2');
+            header.textContent = 'Preferences';
+            header.style.fontFamily = 'JustSans, Arial, sans-serif';
+            modalContent.appendChild(header);
+
+            // Create input fields for Fats, Proteins, and Carbs
+            const labels = ['Fats', 'Proteins', 'Carbs'];
+            labels.forEach(label => {
+                const labelElement = document.createElement('label');
+                labelElement.textContent = label;
+                labelElement.style.display = 'block';
+                labelElement.style.marginTop = '10px';
+
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.placeholder = `Enter ${label} (g)`;
+                input.style.width = '100%';
+                input.style.padding = '8px';
+                input.style.marginTop = '5px';
+                input.style.borderRadius = '5px';
+                input.style.border = '1px solid #ccc';
+
+                modalContent.appendChild(labelElement);
+                modalContent.appendChild(input);
+            });
+
+            document.querySelector('.account-icon').addEventListener('click', createAccountPopup);
+
+            // Create Apply and Close buttons
+            const footer = document.createElement('div');
+            footer.style.marginTop = '20px';
+            footer.style.textAlign = 'center';
+
+            const applyBtn = document.createElement('button');
+            applyBtn.textContent = 'Apply';
+            applyBtn.style.padding = '10px 20px';
+            applyBtn.style.borderRadius = '20px';
+            applyBtn.style.backgroundColor = '#2ecc71';
+            applyBtn.style.color = 'white';
+            applyBtn.style.border = 'none';
+            applyBtn.style.cursor = 'pointer';
+            applyBtn.style.marginRight='12px'
+            applyBtn.onclick = () => {
+                
+                modal.style.display = 'none'; 
+            };
+
+            const closeBtn = document.createElement('button');
+            closeBtn.textContent = 'Close';
+            closeBtn.style.padding = '10px 20px';
+            closeBtn.style.borderRadius = '20px';
+            closeBtn.style.backgroundColor = '#e74c3c';
+            closeBtn.style.color = 'white';
+            closeBtn.style.border = 'none';
+            closeBtn.style.cursor = 'pointer';
+            closeBtn.onclick = () => modal.style.display = 'none'; 
+
+            footer.appendChild(applyBtn);
+            footer.appendChild(closeBtn);
+            modalContent.appendChild(footer);
+
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+        }
+
+        // Show modal when filter button is clicked
+        document.querySelector('.filter-button').addEventListener('click', createPreferencesPopup);
+
+       const searchBar = document.getElementById('searchBar');
+        const progressBar = document.getElementById('progressBar');
+        const progress = document.getElementById('progress');
+        const searchButton = document.getElementById('searchButton');
+
+        searchButton.addEventListener('click', function() {
+            if (progressBar.style.display !== 'none') {
+                // Hide the progress bar and show the search bar
+                progressBar.style.display = 'none';
+                searchBar.style.display = 'block';
+            } else {
+                // Hide the search bar and show the progress bar
+                searchBar.style.display = 'none';
+                progressBar.style.display = 'block';
+                
+                // Simulate progress bar filling up
+                let width = 0;
+                const interval = setInterval(() => {
+                    if (width >= 100) {
+                        clearInterval(interval);
+                    } else {
+                        width++;
+                        progress.style.width = width + '%';
+                    }
+                }, 20);
+            }
+        });
+
+
+    </script>
+</body>
+</html>

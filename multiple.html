@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <style>
+        .clickable-div {
+            width: 200px;
+            height: 100px;
+            margin: 20px;
+            background-color: lightgreen;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 1px solid #ccc;
+        }
+        #content {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <div class="clickable-div" data-page="page1">Load Page 1</div>
+        <div class="clickable-div" data-page="page2">Load Page 2</div>
+    </div>
+
+    <script>
+        const pages = {
+            page1: `
+                <div>
+                    <h1>Welcome to Page 1</h1>
+                    <p>This is the content of Page 1.</p>
+                    <button onclick="loadHomepage()">Back to Homepage</button>
+                </div>
+            `,
+            page2: `
+                <div>
+                    <h1>Welcome to Page 2</h1>
+                    <p>This is the content of Page 2.</p>
+                    <button onclick="loadHomepage()">Back to Homepage</button>
+                </div>
+            `
+        };
+
+        document.querySelectorAll('.clickable-div').forEach(div => {
+            div.addEventListener('click', function () {
+                const pageKey = this.getAttribute('data-page'); // Get the page identifier
+                document.getElementById('content').innerHTML = pages[pageKey]; // Load the content
+            });
+        });
+
+        function loadHomepage() {
+            // Reset to homepage content
+            document.getElementById('content').innerHTML = `
+                <div class="clickable-div" data-page="page1">Load Page 1</div>
+                <div class="clickable-div" data-page="page2">Load Page 2</div>
+            `;
+            // Rebind click event listeners
+            document.querySelectorAll('.clickable-div').forEach(div => {
+                div.addEventListener('click', function () {
+                    const pageKey = this.getAttribute('data-page');
+                    document.getElementById('content').innerHTML = pages[pageKey];
+                });
+            });
+        }
+    </script>
+</body>
+</html>

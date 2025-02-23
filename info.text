@@ -1,0 +1,210 @@
+const menuItems = {
+    sandwiches: [
+        { 
+            name: "Subway Club", 
+            description: "Turkey, ham, roast beef, and Swiss cheese", 
+            calories: 480, 
+            image: "sandwiches1.jpg", 
+            carbs: 40, 
+            fats: 15, 
+            proteins: 25,
+            price: 6.99
+        },
+        { 
+            name: "Tuna Sub", 
+            description: "Tuna salad with lettuce, tomatoes, and pickles", 
+            calories: 500, 
+            image: "sandwiches2.jpg", 
+            carbs: 45, 
+            fats: 20, 
+            proteins: 30,
+            price: 7.49
+        },
+        { 
+            name: "Veggie Delight", 
+            description: "Lettuce, tomatoes, cucumbers, and olives on whole wheat bread", 
+            calories: 300, 
+            image: "sandwiches3.jpg", 
+            carbs: 50, 
+            fats: 5, 
+            proteins: 10,
+            price: 5.99
+        },
+        { 
+            name: "Italian BMT", 
+            description: "Pepperoni, salami, and ham with melted mozzarella", 
+            calories: 600, 
+            image: "sandwiches4.jpg", 
+            carbs: 50, 
+            fats: 25, 
+            proteins: 30,
+            price: 7.99
+        },
+        { 
+            name: "Chicken Bacon Ranch", 
+            description: "Grilled chicken, bacon, and ranch dressing", 
+            calories: 550, 
+            image: "sandwiches5.jpg", 
+            carbs: 40, 
+            fats: 30, 
+            proteins: 35,
+            price: 8.49
+        }
+    ],
+    wraps: [
+        { 
+            name: "Chicken Caesar Wrap", 
+            description: "Grilled chicken, Caesar dressing, and lettuce", 
+            calories: 350, 
+            image: "wraps1.jpg", 
+            carbs: 40, 
+            fats: 12, 
+            proteins: 25,
+            price: 7.49
+        },
+        { 
+            name: "Veggie Wrap", 
+            description: "Crisp veggies with hummus", 
+            calories: 250, 
+            image: "wraps2.jpg", 
+            carbs: 40, 
+            fats: 10, 
+            proteins: 8,
+            price: 6.49
+        },
+        { 
+            name: "Turkey & Bacon Wrap", 
+            description: "Turkey, bacon, lettuce, and tomatoes wrapped in a tortilla", 
+            calories: 400, 
+            image: "wraps3.jpg", 
+            carbs: 45, 
+            fats: 18, 
+            proteins: 28,
+            price: 7.99
+        },
+        { 
+            name: "Spicy Italian Wrap", 
+            description: "Italian sausage, pepperoni, and hot peppers", 
+            calories: 500, 
+            image: "wraps4.jpg", 
+            carbs: 45, 
+            fats: 25, 
+            proteins: 30,
+            price: 8.29
+        },
+        { 
+            name: "Buffalo Chicken Wrap", 
+            description: "Buffalo chicken with ranch and lettuce", 
+            calories: 450, 
+            image: "wraps5.jpg", 
+            carbs: 40, 
+            fats: 18, 
+            proteins: 35,
+            price: 8.49
+        }
+    ],
+    salads: [
+        { 
+            name: "Chicken Salad", 
+            description: "Grilled chicken, mixed greens, and dressing", 
+            calories: 350, 
+            image: "salads1.jpg", 
+            carbs: 20, 
+            fats: 15, 
+            proteins: 35,
+            price: 6.99
+        },
+        { 
+            name: "Veggie Salad", 
+            description: "Mixed greens, cucumbers, tomatoes, olives, and carrots", 
+            calories: 150, 
+            image: "salads2.jpg", 
+            carbs: 30, 
+            fats: 5, 
+            proteins: 6,
+            price: 5.49
+        },
+        { 
+            name: "Tuna Salad", 
+            description: "Tuna salad with lettuce, tomatoes, and onions", 
+            calories: 400, 
+            image: "salads3.jpg", 
+            carbs: 20, 
+            fats: 20, 
+            proteins: 35,
+            price: 7.99
+        },
+        { 
+            name: "Steak Salad", 
+            description: "Steak, mixed greens, and ranch dressing", 
+            calories: 500, 
+            image: "salads4.jpg", 
+            carbs: 25, 
+            fats: 30, 
+            proteins: 40,
+            price: 9.99
+        },
+        { 
+            name: "Caesar Salad", 
+            description: "Romaine lettuce, Caesar dressing, and Parmesan cheese", 
+            calories: 300, 
+            image: "salads5.jpg", 
+            carbs: 15, 
+            fats: 20, 
+            proteins: 15,
+            price: 6.49
+        }
+    ],
+    drinks: [
+        { 
+            name: "Coca-Cola", 
+            description: "Classic soda", 
+            calories: 150, 
+            image: "drinks1.jpg", 
+            carbs: 35, 
+            fats: 0, 
+            proteins: 0,
+            price: 1.99
+        },
+        { 
+            name: "Lemonade", 
+            description: "Refreshing lemon drink", 
+            calories: 120, 
+            image: "drinks2.jpg", 
+            carbs: 30, 
+            fats: 0, 
+            proteins: 0,
+            price: 2.49
+        },
+        { 
+            name: "Iced Tea", 
+            description: "Sweetened or unsweetened iced tea", 
+            calories: 90, 
+            image: "drinks3.jpg", 
+            carbs: 20, 
+            fats: 0, 
+            proteins: 0,
+            price: 1.89
+        },
+        { 
+            name: "Water", 
+            description: "Refresh yourself with water", 
+            calories: 0, 
+            image: "drinks4.jpg", 
+            carbs: 0, 
+            fats: 0, 
+            proteins: 0,
+            price: 0.99
+        },
+        { 
+            name: "Orange Juice", 
+            description: "Freshly squeezed orange juice", 
+            calories: 160, 
+            image: "drinks5.jpg", 
+            carbs: 40, 
+            fats: 0, 
+            proteins: 1,
+            price: 2.79
+        }
+    ]
+};
