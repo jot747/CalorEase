@@ -1,7 +1,6 @@
 # Calories-Based Food Delivery App Prototype
 
 ![App Screenshot](demo2.png)
-![App Screenshot](demo3.png)
 ![App Screenshot](demo4.png)
 
 
