@@ -1,6 +1,9 @@
 # Calories-Based Food Delivery App Prototype
 
-![App Screenshot](demo1.png)
+![App Screenshot](demo2.png)
+![App Screenshot](demo3.png)
+![App Screenshot](demo4.png)
+
 
 ## Overview
 This is a prototype for a calories-based food delivery application. The app helps users select meals based on their calorie preferences and dietary requirements.
