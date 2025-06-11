@@ -19,7 +19,6 @@ Open the `index.html` file in a browser.
 
 ## Technologies Used
 - HTML, CSS, JavaScript
-- Optional: Bootstrap/Tailwind for styling
 
 ## Contributing
 Feel free to fork this repository and submit pull requests with improvements!
